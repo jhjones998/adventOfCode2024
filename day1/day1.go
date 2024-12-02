@@ -1,15 +1,17 @@
 package day1
 
 import (
+	"adventOfCode2024/utils"
 	"fmt"
-	"math"
 	"path/filepath"
 	"slices"
+	"strconv"
+	"strings"
 )
 
 func D1Part1() {
 	abs, _ := filepath.Abs("day1/input.txt")
-	nums1, nums2, err := parseFileText(getFileText(abs))
+	nums1, nums2, err := parseFileText(utils.GetFileText(abs))
 	if err != nil {
 		fmt.Println(err)
 		panic(err)
@@ -18,14 +20,14 @@ func D1Part1() {
 	slices.Sort(nums2)
 	sum := 0
 	for i := 0; i < len(nums1); i++ {
-		sum += int(math.Abs(float64(nums1[i]) - float64(nums2[i])))
+		sum += utils.IntAbs(nums1[i] - nums2[i])
 	}
 	fmt.Println(sum)
 }
 
 func D1Part2() {
 	abs, _ := filepath.Abs("day1/input.txt")
-	nums1, nums2, err := parseFileText(getFileText(abs))
+	nums1, nums2, err := parseFileText(utils.GetFileText(abs))
 	if err != nil {
 		fmt.Println(err)
 		panic(err)
@@ -43,4 +45,26 @@ func D1Part2() {
 		similarityScore += nums2map[num] * num
 	}
 	fmt.Println(similarityScore)
+}
+
+func parseFileText(text string) ([]int, []int, error) {
+	var nums1, nums2 []int
+	for _, line := range strings.Split(text, "\n") {
+		if line == "" {
+			continue
+		}
+		nums := strings.Split(line, "   ")
+		num1, err := strconv.Atoi(nums[0])
+		if err != nil {
+			return nil, nil, err
+		}
+		nums1 = append(nums1, num1)
+		num2, err := strconv.Atoi(nums[1])
+		if err != nil {
+			return nil, nil, err
+		}
+		nums2 = append(nums2, num2)
+	}
+
+	return nums1, nums2, nil
 }
