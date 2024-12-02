@@ -24,7 +24,7 @@ func D2Part2() {
 	safeCount := 0
 	for _, report := range reportNums {
 		for i := 0; i < len(report); i++ {
-			tmpReport := []int{}
+			var tmpReport []int
 			reportWithIRemoved := append(append(tmpReport, report[:i]...), report[i+1:]...)
 			reportSafe := validateWithNoDampener(reportWithIRemoved)
 			if reportSafe {
@@ -38,7 +38,7 @@ func D2Part2() {
 
 func parseFileTextP1(input string) [][]int {
 	reports := strings.Split(input, "\n")
-	reportNums := [][]int{}
+	var reportNums [][]int
 	for _, report := range reports {
 		if strings.Trim(report, " ") == "" {
 			continue
