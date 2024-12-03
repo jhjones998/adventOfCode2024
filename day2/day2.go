@@ -20,6 +20,8 @@ func D2Part1() {
 }
 
 func D2Part2() {
+	/* TODO: Improve time complexity by only checking for the first pair where the difference
+	   is wrong or the first triple where the decreasing/increasing behavior is wrong */
 	reportNums := parseFileTextP1(utils.GetFileText("day2/inputp1.txt"))
 	safeCount := 0
 	for _, report := range reportNums {
