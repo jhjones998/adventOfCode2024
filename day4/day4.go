@@ -12,9 +12,6 @@ func D4Part1() {
 	xmasCount := 0
 	for i := 0; i < len(wordSearch); i++ {
 		for j := 0; j < len(wordSearch[i]); j++ {
-			if wordSearch[i][j] != xmasRunes[0] {
-				continue
-			}
 			// check north
 			if checkForWord(&wordSearch, xmasRunes, i, -1, j, 0) {
 				xmasCount++
