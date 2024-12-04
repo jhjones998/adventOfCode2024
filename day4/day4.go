@@ -13,13 +13,9 @@ search in part 1. Look into it */
 func D4Part1() {
 	xmasRunes := []rune("XMAS")
 	wordSearch := getWordSearch("day4/inputp1.txt")
-	visitedCells := map[[2]int]bool{}
 	xmasCount := 0
 	for i := 0; i < len(wordSearch); i++ {
 		for j := 0; j < len(wordSearch[i]); j++ {
-			if visitedCells[[2]int{i, j}] {
-				continue
-			}
 			if wordSearch[i][j] != xmasRunes[0] {
 				continue
 			}
@@ -29,9 +25,6 @@ func D4Part1() {
 				if wordSearch[i-1][j] == xmasRunes[1] &&
 					wordSearch[i-2][j] == xmasRunes[2] &&
 					wordSearch[i-3][j] == xmasRunes[3] {
-					visitedCells[[2]int{i - 1, j}] = true
-					visitedCells[[2]int{i - 2, j}] = true
-					visitedCells[[2]int{i - 3, j}] = true
 					xmasCount++
 				}
 				// check northwest
@@ -39,9 +32,6 @@ func D4Part1() {
 					if wordSearch[i-1][j-1] == xmasRunes[1] &&
 						wordSearch[i-2][j-2] == xmasRunes[2] &&
 						wordSearch[i-3][j-3] == xmasRunes[3] {
-						visitedCells[[2]int{i - 1, j - 1}] = true
-						visitedCells[[2]int{i - 2, j - 2}] = true
-						visitedCells[[2]int{i - 3, j - 3}] = true
 						xmasCount++
 					}
 				}
@@ -50,9 +40,6 @@ func D4Part1() {
 					if wordSearch[i-1][j+1] == xmasRunes[1] &&
 						wordSearch[i-2][j+2] == xmasRunes[2] &&
 						wordSearch[i-3][j+3] == xmasRunes[3] {
-						visitedCells[[2]int{i - 1, j + 1}] = true
-						visitedCells[[2]int{i - 2, j + 2}] = true
-						visitedCells[[2]int{i - 3, j + 3}] = true
 						xmasCount++
 					}
 				}
@@ -63,9 +50,6 @@ func D4Part1() {
 				if wordSearch[i+1][j] == xmasRunes[1] &&
 					wordSearch[i+2][j] == xmasRunes[2] &&
 					wordSearch[i+3][j] == xmasRunes[3] {
-					visitedCells[[2]int{i + 1, j}] = true
-					visitedCells[[2]int{i + 2, j}] = true
-					visitedCells[[2]int{i + 3, j}] = true
 					xmasCount++
 				}
 
@@ -74,9 +58,6 @@ func D4Part1() {
 					if wordSearch[i+1][j-1] == xmasRunes[1] &&
 						wordSearch[i+2][j-2] == xmasRunes[2] &&
 						wordSearch[i+3][j-3] == xmasRunes[3] {
-						visitedCells[[2]int{i + 1, j - 1}] = true
-						visitedCells[[2]int{i + 2, j - 2}] = true
-						visitedCells[[2]int{i + 3, j - 3}] = true
 						xmasCount++
 					}
 				}
@@ -86,9 +67,6 @@ func D4Part1() {
 					if wordSearch[i+1][j+1] == xmasRunes[1] &&
 						wordSearch[i+2][j+2] == xmasRunes[2] &&
 						wordSearch[i+3][j+3] == xmasRunes[3] {
-						visitedCells[[2]int{i + 1, j + 1}] = true
-						visitedCells[[2]int{i + 2, j + 2}] = true
-						visitedCells[[2]int{i + 3, j + 3}] = true
 						xmasCount++
 					}
 				}
@@ -99,9 +77,6 @@ func D4Part1() {
 				if wordSearch[i][j+1] == xmasRunes[1] &&
 					wordSearch[i][j+2] == xmasRunes[2] &&
 					wordSearch[i][j+3] == xmasRunes[3] {
-					visitedCells[[2]int{i, j + 1}] = true
-					visitedCells[[2]int{i, j + 2}] = true
-					visitedCells[[2]int{i, j + 3}] = true
 					xmasCount++
 				}
 			}
@@ -111,9 +86,6 @@ func D4Part1() {
 				if wordSearch[i][j-1] == xmasRunes[1] &&
 					wordSearch[i][j-2] == xmasRunes[2] &&
 					wordSearch[i][j-3] == xmasRunes[3] {
-					visitedCells[[2]int{i, j - 1}] = true
-					visitedCells[[2]int{i, j - 2}] = true
-					visitedCells[[2]int{i, j - 3}] = true
 					xmasCount++
 				}
 			}
