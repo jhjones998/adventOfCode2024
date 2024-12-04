@@ -6,6 +6,10 @@ import (
 	"strings"
 )
 
+/* Not sure if there's a better solution to part 2 that looks like part 1. I realized we
+were just looking for and testing A's in part 2, which is a lot simpler than the XMAS
+search in part 1. Look into it */
+
 func D4Part1() {
 	xmasRunes := []rune("XMAS")
 	wordSearch := getWordSearch("day4/inputp1.txt")
