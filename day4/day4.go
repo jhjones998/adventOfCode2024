@@ -13,37 +13,21 @@ func D4Part1() {
 	for i := 0; i < len(wordSearch); i++ {
 		for j := 0; j < len(wordSearch[i]); j++ {
 			// check north
-			if checkForWord(&wordSearch, xmasRunes, i, -1, j, 0) {
-				xmasCount++
-			}
+			xmasCount += utils.BoolToInt(checkForWord(&wordSearch, xmasRunes, i, -1, j, 0))
 			// check northeast
-			if checkForWord(&wordSearch, xmasRunes, i, -1, j, 1) {
-				xmasCount++
-			}
+			xmasCount += utils.BoolToInt(checkForWord(&wordSearch, xmasRunes, i, -1, j, 1))
 			// check east
-			if checkForWord(&wordSearch, xmasRunes, i, 0, j, 1) {
-				xmasCount++
-			}
+			xmasCount += utils.BoolToInt(checkForWord(&wordSearch, xmasRunes, i, 0, j, 1))
 			// check southeast
-			if checkForWord(&wordSearch, xmasRunes, i, 1, j, 1) {
-				xmasCount++
-			}
+			xmasCount += utils.BoolToInt(checkForWord(&wordSearch, xmasRunes, i, 1, j, 1))
 			// check south
-			if checkForWord(&wordSearch, xmasRunes, i, 1, j, 0) {
-				xmasCount++
-			}
+			xmasCount += utils.BoolToInt(checkForWord(&wordSearch, xmasRunes, i, 1, j, 0))
 			// check southwest
-			if checkForWord(&wordSearch, xmasRunes, i, 1, j, -1) {
-				xmasCount++
-			}
+			xmasCount += utils.BoolToInt(checkForWord(&wordSearch, xmasRunes, i, 1, j, -1))
 			// check west
-			if checkForWord(&wordSearch, xmasRunes, i, 0, j, -1) {
-				xmasCount++
-			}
+			xmasCount += utils.BoolToInt(checkForWord(&wordSearch, xmasRunes, i, 0, j, -1))
 			// check northwest
-			if checkForWord(&wordSearch, xmasRunes, i, -1, j, -1) {
-				xmasCount++
-			}
+			xmasCount += utils.BoolToInt(checkForWord(&wordSearch, xmasRunes, i, -1, j, -1))
 		}
 	}
 	fmt.Println(xmasCount)
