@@ -15,75 +15,37 @@ func D4Part1() {
 			if wordSearch[i][j] != xmasRunes[0] {
 				continue
 			}
-			// check northerly directions
-			if i >= 3 {
-				// check north
-				if wordSearch[i-1][j] == xmasRunes[1] &&
-					wordSearch[i-2][j] == xmasRunes[2] &&
-					wordSearch[i-3][j] == xmasRunes[3] {
-					xmasCount++
-				}
-				// check northwest
-				if j >= 3 {
-					if wordSearch[i-1][j-1] == xmasRunes[1] &&
-						wordSearch[i-2][j-2] == xmasRunes[2] &&
-						wordSearch[i-3][j-3] == xmasRunes[3] {
-						xmasCount++
-					}
-				}
-				//check northeast
-				if j < len(wordSearch[i])-3 {
-					if wordSearch[i-1][j+1] == xmasRunes[1] &&
-						wordSearch[i-2][j+2] == xmasRunes[2] &&
-						wordSearch[i-3][j+3] == xmasRunes[3] {
-						xmasCount++
-					}
-				}
+			// check north
+			if checkForWord(&wordSearch, xmasRunes, i, -1, j, 0) {
+				xmasCount++
 			}
-			// check southerly directions
-			if i < len(wordSearch)-3 {
-				// check south
-				if wordSearch[i+1][j] == xmasRunes[1] &&
-					wordSearch[i+2][j] == xmasRunes[2] &&
-					wordSearch[i+3][j] == xmasRunes[3] {
-					xmasCount++
-				}
-
-				// check southwest
-				if j >= 3 {
-					if wordSearch[i+1][j-1] == xmasRunes[1] &&
-						wordSearch[i+2][j-2] == xmasRunes[2] &&
-						wordSearch[i+3][j-3] == xmasRunes[3] {
-						xmasCount++
-					}
-				}
-
-				// check southeast
-				if j < len(wordSearch[i])-3 {
-					if wordSearch[i+1][j+1] == xmasRunes[1] &&
-						wordSearch[i+2][j+2] == xmasRunes[2] &&
-						wordSearch[i+3][j+3] == xmasRunes[3] {
-						xmasCount++
-					}
-				}
+			// check northeast
+			if checkForWord(&wordSearch, xmasRunes, i, -1, j, 1) {
+				xmasCount++
 			}
-
 			// check east
-			if j < len(wordSearch[i])-3 {
-				if wordSearch[i][j+1] == xmasRunes[1] &&
-					wordSearch[i][j+2] == xmasRunes[2] &&
-					wordSearch[i][j+3] == xmasRunes[3] {
-					xmasCount++
-				}
+			if checkForWord(&wordSearch, xmasRunes, i, 0, j, 1) {
+				xmasCount++
 			}
-
-			//check west
-			if j >= 3 {
-				if wordSearch[i][j-1] == xmasRunes[1] &&
-					wordSearch[i][j-2] == xmasRunes[2] &&
-					wordSearch[i][j-3] == xmasRunes[3] {
-					xmasCount++
-				}
+			// check southeast
+			if checkForWord(&wordSearch, xmasRunes, i, 1, j, 1) {
+				xmasCount++
+			}
+			// check south
+			if checkForWord(&wordSearch, xmasRunes, i, 1, j, 0) {
+				xmasCount++
+			}
+			// check southwest
+			if checkForWord(&wordSearch, xmasRunes, i, 1, j, -1) {
+				xmasCount++
+			}
+			// check west
+			if checkForWord(&wordSearch, xmasRunes, i, 0, j, -1) {
+				xmasCount++
+			}
+			// check northwest
+			if checkForWord(&wordSearch, xmasRunes, i, -1, j, -1) {
+				xmasCount++
 			}
 		}
 	}
@@ -92,6 +54,7 @@ func D4Part1() {
 
 func D4Part2() {
 	masRunes := []rune("MAS")
+	diagonalDistance := (len(masRunes) - 1) / 2
 	wordSearch := getWordSearch("day4/inputp1.txt")
 	masxCount := 0
 	for i := 0; i < len(wordSearch); i++ {
@@ -99,7 +62,10 @@ func D4Part2() {
 			if wordSearch[i][j] != masRunes[1] {
 				continue
 			}
-			if i >= 1 && i < len(wordSearch)-1 && j >= 1 && j < len(wordSearch[i])-1 {
+			if i >= diagonalDistance &&
+				i < len(wordSearch)-diagonalDistance &&
+				j >= diagonalDistance &&
+				j < len(wordSearch[i])-diagonalDistance {
 				upperleftRune := wordSearch[i-1][j-1]
 				upperrightRune := wordSearch[i-1][j+1]
 				lowerleftRune := wordSearch[i+1][j-1]
@@ -132,4 +98,22 @@ func getWordSearch(input string) [][]rune {
 		runeArray = append(runeArray, runesInLine)
 	}
 	return runeArray
+}
+
+func checkForWord(wordSearch *[][]rune, runes []rune, rowIdx, rowInc, colIdx, colInc int) bool {
+	runeLenMinusOne := len(runes) - 1
+	if rowIdx+rowInc*runeLenMinusOne < 0 ||
+		rowIdx+rowInc*runeLenMinusOne >= len(*wordSearch) ||
+		colIdx+colInc*runeLenMinusOne < 0 ||
+		colIdx+colInc*runeLenMinusOne >= len((*wordSearch)[rowIdx]) {
+		return false
+	}
+	for i := 0; i <= runeLenMinusOne; i++ {
+		if (*wordSearch)[rowIdx][colIdx] != runes[i] {
+			return false
+		}
+		rowIdx += rowInc
+		colIdx += colInc
+	}
+	return true
 }
