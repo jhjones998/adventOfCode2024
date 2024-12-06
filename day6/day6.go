@@ -69,16 +69,13 @@ func D6Part2() {
 	guardMap, guardPos, guardDir := getInputValues("day6/inputp1.txt")
 	isLoop, cellsOnOriginalPath := checkIfLoop(&guardMap, guardPos, guardDir)
 	loopingLayoutCount := utils.BoolToInt(isLoop)
-	for i := 0; i < len(guardMap); i++ {
-		for j := 0; j < len(guardMap[0]); j++ {
-			_, posOnOriginalPath := cellsOnOriginalPath[GuardPos{i, j}]
-			if guardMap[i][j] != obstacle && posOnOriginalPath {
-				tmp := guardMap[i][j]
-				guardMap[i][j] = obstacle
-				isLoop, _ = checkIfLoop(&guardMap, guardPos, guardDir)
-				loopingLayoutCount += utils.BoolToInt(isLoop)
-				guardMap[i][j] = tmp
-			}
+	for guardPosOnInitialPath := range cellsOnOriginalPath {
+		if guardPosOnInitialPath != guardPos {
+			tmp := guardMap[guardPosOnInitialPath.row][guardPosOnInitialPath.col]
+			guardMap[guardPosOnInitialPath.row][guardPosOnInitialPath.col] = obstacle
+			isLoop, _ = checkIfLoop(&guardMap, guardPos, guardDir)
+			loopingLayoutCount += utils.BoolToInt(isLoop)
+			guardMap[guardPosOnInitialPath.row][guardPosOnInitialPath.col] = tmp
 		}
 	}
 	fmt.Println(loopingLayoutCount)

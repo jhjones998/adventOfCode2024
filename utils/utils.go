@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 func GetFileText(filename string) string {
@@ -42,4 +43,10 @@ func BoolToInt(b bool) int {
 		return 1
 	}
 	return 0
+}
+
+func TimePart(part func(), partName string) {
+	start := time.Now()
+	part()
+	fmt.Println("Time taken for", partName, time.Since(start))
 }
