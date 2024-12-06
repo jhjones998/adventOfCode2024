@@ -7,9 +7,11 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"time"
 )
 
-func D1Part1() {
+func D1Part1() int {
+	defer utils.TimeTrack(time.Now())
 	abs, _ := filepath.Abs("day1/input.txt")
 	nums1, nums2, err := parseFileText(utils.GetFileText(abs))
 	if err != nil {
@@ -22,10 +24,11 @@ func D1Part1() {
 	for i := 0; i < len(nums1); i++ {
 		sum += utils.IntAbs(nums1[i] - nums2[i])
 	}
-	fmt.Println(sum)
+	return sum
 }
 
-func D1Part2() {
+func D1Part2() int {
+	defer utils.TimeTrack(time.Now())
 	abs, _ := filepath.Abs("day1/input.txt")
 	nums1, nums2, err := parseFileText(utils.GetFileText(abs))
 	if err != nil {
@@ -44,7 +47,7 @@ func D1Part2() {
 	for _, num := range nums1 {
 		similarityScore += nums2map[num] * num
 	}
-	fmt.Println(similarityScore)
+	return similarityScore
 }
 
 func parseFileText(text string) ([]int, []int, error) {

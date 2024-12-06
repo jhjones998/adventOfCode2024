@@ -2,8 +2,8 @@ package day6
 
 import (
 	"adventOfCode2024/utils"
-	"fmt"
 	"strings"
+	"time"
 )
 
 // TODO: See if there's a faster way to do D6Part2
@@ -47,7 +47,8 @@ func (gp *GuardPos) validateNotObstacle(guardMap *GuardMap) bool {
 	return gm[gp.row][gp.col] != obstacle
 }
 
-func D6Part1() {
+func D6Part1() int {
+	defer utils.TimeTrack(time.Now())
 	guardMap, guardPos, guardDir := getInputValues("day6/inputp1.txt")
 	visitedCells := make(map[GuardPos]bool)
 	visitedCells[guardPos] = true
@@ -62,10 +63,11 @@ func D6Part1() {
 		}
 		newGuardPos = guardPos.move(guardDir)
 	}
-	fmt.Println(len(visitedCells))
+	return len(visitedCells)
 }
 
-func D6Part2() {
+func D6Part2() int {
+	defer utils.TimeTrack(time.Now())
 	guardMap, guardPos, guardDir := getInputValues("day6/inputp1.txt")
 	isLoop, cellsOnOriginalPath := checkIfLoop(&guardMap, guardPos, guardDir)
 	loopingLayoutCount := utils.BoolToInt(isLoop)
@@ -78,7 +80,7 @@ func D6Part2() {
 			guardMap[guardPosOnInitialPath.row][guardPosOnInitialPath.col] = tmp
 		}
 	}
-	fmt.Println(loopingLayoutCount)
+	return loopingLayoutCount
 }
 
 func checkIfLoop(guardMap *GuardMap, guardPos GuardPos, guardDir GuardDir) (bool, map[GuardPos]map[GuardDir]bool) {

@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 )
 
-func D2Part1() {
+func D2Part1() int {
+	defer utils.TimeTrack(time.Now())
 	reportNums := parseFileTextP1(utils.GetFileText("day2/inputp1.txt"))
 	safeCount := 0
 	for _, report := range reportNums {
@@ -16,10 +18,11 @@ func D2Part1() {
 			safeCount++
 		}
 	}
-	fmt.Println(safeCount)
+	return safeCount
 }
 
-func D2Part2() {
+func D2Part2() int {
+	defer utils.TimeTrack(time.Now())
 	/* TODO: Improve time complexity by only checking for the first pair where the difference
 	   is wrong or the first triple where the decreasing/increasing behavior is wrong */
 	reportNums := parseFileTextP1(utils.GetFileText("day2/inputp1.txt"))
@@ -35,7 +38,7 @@ func D2Part2() {
 			}
 		}
 	}
-	fmt.Println(safeCount)
+	return safeCount
 }
 
 func parseFileTextP1(input string) [][]int {

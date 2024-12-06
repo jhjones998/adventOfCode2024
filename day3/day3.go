@@ -6,19 +6,22 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
-func D3Part1() {
+func D3Part1() int {
+	defer utils.TimeTrack(time.Now())
 	input := utils.GetFileText("day3/inputp1.txt")
 	matches := getRegexpMatches(input, `mul\(\d{1,3},\d{1,3}\)`)
 	mulSum := 0
 	for _, match := range matches {
 		mulSum += parseMul(match)
 	}
-	fmt.Println(mulSum)
+	return mulSum
 }
 
-func D3Part2() {
+func D3Part2() int {
+	defer utils.TimeTrack(time.Now())
 	input := utils.GetFileText("day3/inputp1.txt")
 	matches := getRegexpMatches(input, `(mul\(\d{1,3},\d{1,3}\))|(do\(\))|(don\'t\(\))`)
 	mulSum := 0
@@ -36,7 +39,7 @@ func D3Part2() {
 			mulSum += parseMul(match)
 		}
 	}
-	fmt.Println(mulSum)
+	return mulSum
 }
 
 func parseMul(s string) int {

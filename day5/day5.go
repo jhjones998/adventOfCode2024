@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 )
 
-func D5Part1() {
+func D5Part1() int {
+	defer utils.TimeTrack(time.Now())
 	rules, updates := getInputValues("day5/inputp1.txt")
 	middleUpdateOKSum := 0
 	for _, updateArr := range updates {
@@ -31,10 +33,11 @@ func D5Part1() {
 			middleUpdateOKSum += updateArr[(len(updateArr)-1)/2]
 		}
 	}
-	fmt.Println(middleUpdateOKSum)
+	return middleUpdateOKSum
 }
 
-func D5Part2() {
+func D5Part2() int {
+	defer utils.TimeTrack(time.Now())
 	rules, updates := getInputValues("day5/inputp1.txt")
 	sum := 0
 	for _, updateArr := range updates {
@@ -64,7 +67,7 @@ func D5Part2() {
 			sum += updateArr[(len(updateArr)-1)/2]
 		}
 	}
-	fmt.Println(sum)
+	return sum
 }
 
 func getInputValues(filename string) (map[int]map[int]bool, [][]int) {

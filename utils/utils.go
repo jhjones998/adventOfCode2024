@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
+	"runtime"
 	"time"
 )
 
@@ -45,8 +47,18 @@ func BoolToInt(b bool) int {
 	return 0
 }
 
-func TimePart(part func(), partName string) {
-	start := time.Now()
-	part()
-	fmt.Println("Time taken for", partName, time.Since(start))
+func TimeTrack(start time.Time) {
+	elapsed := time.Since(start)
+
+	// Skip this function, and fetch the PC and file for its parent.
+	pc, _, _, _ := runtime.Caller(1)
+
+	// Retrieve a function object this functions parent.
+	funcObj := runtime.FuncForPC(pc)
+
+	// Regex to extract just the function name (and not the module path).
+	runtimeFunc := regexp.MustCompile(`^.*\.(.*)$`)
+	name := runtimeFunc.ReplaceAllString(funcObj.Name(), "$1")
+
+	fmt.Println(fmt.Sprintf("%s took %s", name, elapsed))
 }

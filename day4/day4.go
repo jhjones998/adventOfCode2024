@@ -2,11 +2,12 @@ package day4
 
 import (
 	"adventOfCode2024/utils"
-	"fmt"
 	"strings"
+	"time"
 )
 
-func D4Part1() {
+func D4Part1() int {
+	defer utils.TimeTrack(time.Now())
 	xmasRunes := []rune("XMAS")
 	wordSearch := getWordSearch("day4/inputp1.txt")
 	xmasCount := 0
@@ -30,10 +31,11 @@ func D4Part1() {
 			xmasCount += utils.BoolToInt(checkForWord(&wordSearch, xmasRunes, i, -1, j, -1))
 		}
 	}
-	fmt.Println(xmasCount)
+	return xmasCount
 }
 
-func D4Part2() {
+func D4Part2() int {
+	defer utils.TimeTrack(time.Now())
 	masRunes := []rune("MAS")
 	diagonalDistance := (len(masRunes) - 1) / 2
 	wordSearch := getWordSearch("day4/inputp1.txt")
@@ -65,7 +67,7 @@ func D4Part2() {
 			}
 		}
 	}
-	fmt.Println(masxCount)
+	return masxCount
 }
 
 func getWordSearch(input string) [][]rune {
