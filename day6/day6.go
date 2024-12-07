@@ -18,6 +18,11 @@ type GuardDir struct {
 	colOffset int
 }
 
+type GuardPandD struct {
+	pos GuardPos
+	dir GuardDir
+}
+
 type GuardMap [][]rune
 type GuardMapRow []rune
 
@@ -71,21 +76,30 @@ func D6Part2() int {
 	guardMap, guardPos, guardDir := getInputValues("day6/inputp1.txt")
 	isLoop, cellsOnOriginalPath := checkIfLoop(&guardMap, guardPos, guardDir)
 	loopingLayoutCount := utils.BoolToInt(isLoop)
-	for guardPosOnInitialPath := range cellsOnOriginalPath {
-		if guardPosOnInitialPath != guardPos {
-			tmp := guardMap[guardPosOnInitialPath.row][guardPosOnInitialPath.col]
-			guardMap[guardPosOnInitialPath.row][guardPosOnInitialPath.col] = obstacle
-			isLoop, _ = checkIfLoop(&guardMap, guardPos, guardDir)
-			loopingLayoutCount += utils.BoolToInt(isLoop)
-			guardMap[guardPosOnInitialPath.row][guardPosOnInitialPath.col] = tmp
+	prevGuardPos := guardPos
+	prevGuardDir := guardDir
+	tested := make(map[GuardPos]bool)
+	for _, guardPosOnInitialPath := range cellsOnOriginalPath {
+		if guardPosOnInitialPath.pos != guardPos {
+			if !tested[guardPosOnInitialPath.pos] {
+				tmp := guardMap[guardPosOnInitialPath.pos.row][guardPosOnInitialPath.pos.col]
+				guardMap[guardPosOnInitialPath.pos.row][guardPosOnInitialPath.pos.col] = obstacle
+				isLoop, _ = checkIfLoop(&guardMap, prevGuardPos, prevGuardDir)
+				loopingLayoutCount += utils.BoolToInt(isLoop)
+				guardMap[guardPosOnInitialPath.pos.row][guardPosOnInitialPath.pos.col] = tmp
+				tested[guardPosOnInitialPath.pos] = true
+				prevGuardDir = guardPosOnInitialPath.dir
+				prevGuardPos = guardPosOnInitialPath.pos
+			}
 		}
 	}
 	return loopingLayoutCount
 }
 
-func checkIfLoop(guardMap *GuardMap, guardPos GuardPos, guardDir GuardDir) (bool, map[GuardPos]map[GuardDir]bool) {
+func checkIfLoop(guardMap *GuardMap, guardPos GuardPos, guardDir GuardDir) (bool, []GuardPandD) {
 	visitedCellsWithDir := make(map[GuardPos]map[GuardDir]bool)
 	visitedCellsWithDir[guardPos] = map[GuardDir]bool{guardDir: true}
+	path := []GuardPandD{{guardPos, guardDir}}
 
 	isLoop := false
 	nextGuardPos := guardPos.move(guardDir)
@@ -94,9 +108,17 @@ func checkIfLoop(guardMap *GuardMap, guardPos GuardPos, guardDir GuardDir) (bool
 			visitedCellDirMap, ok := visitedCellsWithDir[nextGuardPos]
 			if !ok {
 				visitedCellsWithDir[nextGuardPos] = map[GuardDir]bool{guardDir: true}
+				path = append(path, GuardPandD{
+					pos: nextGuardPos,
+					dir: guardDir,
+				})
 				guardPos = nextGuardPos
 			} else if !visitedCellDirMap[guardDir] {
 				visitedCellDirMap[guardDir] = true
+				path = append(path, GuardPandD{
+					pos: nextGuardPos,
+					dir: guardDir,
+				})
 				guardPos = nextGuardPos
 			} else {
 				isLoop = true
@@ -107,7 +129,7 @@ func checkIfLoop(guardMap *GuardMap, guardPos GuardPos, guardDir GuardDir) (bool
 		}
 		nextGuardPos = guardPos.move(guardDir)
 	}
-	return isLoop, visitedCellsWithDir
+	return isLoop, path
 }
 
 func getInputValues(filename string) (guardMap GuardMap, guardPos GuardPos, guardDir GuardDir) {
