@@ -7,6 +7,7 @@ import (
 )
 
 // TODO: See if there's a faster way to do D6Part2
+// Roughly halved by not running the complete path for each cell on the original path
 
 type GuardPos struct {
 	row int
