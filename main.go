@@ -48,7 +48,8 @@ func main() {
 	fmt.Println("Day 6 Part 1")
 	fmt.Println("Answer:", day6.D6Part1())
 	fmt.Println("Day 6 Part 2")
-	fmt.Println("Answer:", day6.D6Part2())
+	fmt.Println("Map Answer:", day6.D6Part2())
+	fmt.Println("Graph Answer:", day6.D6Part2Graph())
 	fmt.Println()
 
 	fmt.Println("Day 7 Part 1")
