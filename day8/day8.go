@@ -3,12 +3,14 @@ package day8
 import (
 	"adventOfCode2024/utils"
 	"strings"
+	"time"
 )
 
 type antennaType rune
 type mapPos [2]int
 
 func D8Part1() int {
+	defer utils.TimeTrack(time.Now())
 	antennas, numRows, numCols := getInputValues("day8/input.txt")
 	antipodesSeen := make(map[mapPos]bool)
 	for _, antennaPositions := range antennas {
@@ -40,6 +42,7 @@ func D8Part1() int {
 }
 
 func D8Part2() int {
+	defer utils.TimeTrack(time.Now())
 	antennas, numRows, numCols := getInputValues("day8/input.txt")
 	antinodesSeen := make(map[mapPos]bool)
 	for _, antennaPositions := range antennas {

@@ -10,10 +10,13 @@ import (
 	"adventOfCode2024/day7"
 	"adventOfCode2024/day8"
 	"adventOfCode2024/day9"
+	"adventOfCode2024/utils"
 	"fmt"
+	"time"
 )
 
 func main() {
+	defer utils.TimeTrack(time.Now())
 	fmt.Println("Advent of Code 2024")
 	fmt.Println()
 
