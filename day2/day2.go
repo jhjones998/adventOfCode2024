@@ -10,7 +10,7 @@ import (
 
 func D2Part1() int {
 	defer utils.TimeTrack(time.Now())
-	reportNums := parseFileTextP1(utils.GetFileText("day2/inputp1.txt"))
+	reportNums := parseFileTextP1(utils.GetFileText("day2/input.txt"))
 	safeCount := 0
 	for _, report := range reportNums {
 		reportSafe := validateWithNoDampener(report)
@@ -25,7 +25,7 @@ func D2Part2() int {
 	defer utils.TimeTrack(time.Now())
 	/* TODO: Improve time complexity by only checking for the first pair where the difference
 	   is wrong or the first triple where the decreasing/increasing behavior is wrong */
-	reportNums := parseFileTextP1(utils.GetFileText("day2/inputp1.txt"))
+	reportNums := parseFileTextP1(utils.GetFileText("day2/input.txt"))
 	safeCount := 0
 	for _, report := range reportNums {
 		for i := 0; i < len(report); i++ {

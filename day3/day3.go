@@ -11,7 +11,7 @@ import (
 
 func D3Part1() int {
 	defer utils.TimeTrack(time.Now())
-	input := utils.GetFileText("day3/inputp1.txt")
+	input := utils.GetFileText("day3/input.txt")
 	matches := getRegexpMatches(input, `mul\(\d{1,3},\d{1,3}\)`)
 	mulSum := 0
 	for _, match := range matches {
@@ -22,7 +22,7 @@ func D3Part1() int {
 
 func D3Part2() int {
 	defer utils.TimeTrack(time.Now())
-	input := utils.GetFileText("day3/inputp1.txt")
+	input := utils.GetFileText("day3/input.txt")
 	matches := getRegexpMatches(input, `(mul\(\d{1,3},\d{1,3}\))|(do\(\))|(don\'t\(\))`)
 	mulSum := 0
 	do := true

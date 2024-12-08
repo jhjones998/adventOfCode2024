@@ -55,7 +55,7 @@ func (gp *GuardPos) validateNotObstacle(guardMap *GuardMap) bool {
 
 func D6Part1() int {
 	defer utils.TimeTrack(time.Now())
-	guardMap, guardPos, guardDir := getInputValues("day6/inputp1.txt")
+	guardMap, guardPos, guardDir := getInputValues("day6/input.txt")
 	visitedCells := make(map[GuardPos]bool)
 	visitedCells[guardPos] = true
 
@@ -74,7 +74,7 @@ func D6Part1() int {
 
 func D6Part2() int {
 	defer utils.TimeTrack(time.Now())
-	guardMap, guardPos, guardDir := getInputValues("day6/inputp1.txt")
+	guardMap, guardPos, guardDir := getInputValues("day6/input.txt")
 	isLoop, cellsOnOriginalPath := checkIfLoop(&guardMap, guardPos, guardDir)
 	loopingLayoutCount := utils.BoolToInt(isLoop)
 	prevGuardPos := guardPos

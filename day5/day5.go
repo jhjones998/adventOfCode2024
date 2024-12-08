@@ -10,7 +10,7 @@ import (
 
 func D5Part1() int {
 	defer utils.TimeTrack(time.Now())
-	rules, updates := getInputValues("day5/inputp1.txt")
+	rules, updates := getInputValues("day5/input.txt")
 	middleUpdateOKSum := 0
 	for _, updateArr := range updates {
 		updateOk := true
@@ -38,7 +38,7 @@ func D5Part1() int {
 
 func D5Part2() int {
 	defer utils.TimeTrack(time.Now())
-	rules, updates := getInputValues("day5/inputp1.txt")
+	rules, updates := getInputValues("day5/input.txt")
 	sum := 0
 	for _, updateArr := range updates {
 		updateOK := true

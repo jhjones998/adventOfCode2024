@@ -9,7 +9,7 @@ import (
 func D4Part1() int {
 	defer utils.TimeTrack(time.Now())
 	xmasRunes := []rune("XMAS")
-	wordSearch := getWordSearch("day4/inputp1.txt")
+	wordSearch := getWordSearch("day4/input.txt")
 	xmasCount := 0
 	for i := 0; i < len(wordSearch); i++ {
 		for j := 0; j < len(wordSearch[i]); j++ {
@@ -38,7 +38,7 @@ func D4Part2() int {
 	defer utils.TimeTrack(time.Now())
 	masRunes := []rune("MAS")
 	diagonalDistance := (len(masRunes) - 1) / 2
-	wordSearch := getWordSearch("day4/inputp1.txt")
+	wordSearch := getWordSearch("day4/input.txt")
 	masxCount := 0
 	for i := 0; i < len(wordSearch); i++ {
 		for j := 0; j < len(wordSearch[i]); j++ {

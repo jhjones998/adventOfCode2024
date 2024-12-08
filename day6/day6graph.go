@@ -124,7 +124,7 @@ func getInputValuesGraph(filename string) (guardPos *node, guardDir direction) {
 
 func D6Part2Graph() int {
 	defer utils.TimeTrack(time.Now())
-	guardPos, guardDir := getInputValuesGraph("day6/inputp1.txt")
+	guardPos, guardDir := getInputValuesGraph("day6/input.txt")
 	gpd := GuardPosAndDir{guardPos, guardDir}
 	isLoop, path := checkIsLoop(gpd)
 	loopConfigCount := utils.BoolToInt(isLoop)

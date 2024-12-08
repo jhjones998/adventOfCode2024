@@ -62,3 +62,7 @@ func TimeTrack(start time.Time) {
 
 	fmt.Println(fmt.Sprintf("%s took %s", name, elapsed))
 }
+
+func IntInRange(num, low, high int) bool {
+	return num >= low && num < high
+}
