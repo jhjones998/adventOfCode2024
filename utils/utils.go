@@ -106,3 +106,17 @@ func ExtendedGcd(a, b int) (oldR, oldS, oldT, s, t int) {
 	}
 	return oldR, oldS, oldT, s, t
 }
+
+func ExtendedGcdUint64(a, b uint64) (oldR, oldS, oldT, s, t uint64) {
+	oldR, r := a, b
+	oldS, s = 1, 0
+	oldT, t = 0, 1
+
+	for r != 0 {
+		quotient := oldR / r
+		oldR, r = r, oldR-quotient*r
+		oldS, s = s, oldS-quotient*s
+		oldT, t = t, oldT-quotient*t
+	}
+	return oldR, oldS, oldT, s, t
+}

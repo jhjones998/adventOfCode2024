@@ -2,43 +2,63 @@ package day13
 
 import (
 	"adventOfCode2024/utils"
-	"errors"
-	"fmt"
-	"math"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
 )
 
-func Part1() int {
+const adjustment = 10000000000000
+
+func Part1() (totalCost int64) {
 	defer utils.TimeTrack(time.Now())
 	games := getInputValues("day13/input.txt")
-	totalCost := 0
 	for _, game := range games {
-		cheapestSoln, cheapestCost, err := checkWinPossible(game)
-		fmt.Println(game, cheapestSoln, cheapestCost, err)
-		if err != nil {
-			continue
+		ax, ay := game.aButton.xOffset, game.aButton.yOffset
+		bx, by := game.bButton.xOffset, game.bButton.yOffset
+		xGoal, yGoal := game.prizeLocation.x, game.prizeLocation.y
+		for i := int64(0); i < int64(100); i++ {
+			for j := int64(0); j < int64(100); j++ {
+				if ax*i+bx*j == xGoal && ay*i+by*j == yGoal {
+					totalCost += 3*i + j
+				}
+			}
 		}
-		if cheapestSoln == [2]int{0, 0} {
-			continue
-		}
-		totalCost += cheapestCost
 	}
 	return totalCost
 }
 
-func Part2() int {
+func Part2() (totalCost int64) {
 	defer utils.TimeTrack(time.Now())
-	return 0
+	games := getInputValues("day13/input.txt")
+	for _, game := range games {
+		ax, ay := game.aButton.xOffset, game.aButton.yOffset
+		bx, by := game.bButton.xOffset, game.bButton.yOffset
+		xGoal, yGoal := game.prizeLocation.x+adjustment, game.prizeLocation.y+adjustment
+		divisor := ay*bx - by*ax
+		if divisor != 0 {
+			b := (xGoal*ay - yGoal*ax) / divisor
+			a := (xGoal*by - yGoal*bx) / -divisor
+			if ax*a+bx*b == xGoal && ay*a+by*b == yGoal {
+				totalCost += 3*a + b
+			}
+		} else {
+			if ay == by && ax == bx {
+				if xGoal%bx == 0 {
+					totalCost += xGoal / bx
+				}
+			}
+		}
+
+	}
+	return totalCost
 }
 
 type ButtonPress struct {
-	xOffset, yOffset int
+	xOffset, yOffset int64
 }
 type Position struct {
-	x, y int
+	x, y int64
 }
 type GameInfo struct {
 	aButton, bButton ButtonPress
@@ -61,7 +81,7 @@ func getInputValues(filename string) (games []GameInfo) {
 			if err != nil {
 				panic(err)
 			}
-			buttons = append(buttons, ButtonPress{x, y})
+			buttons = append(buttons, ButtonPress{int64(x), int64(y)})
 		}
 		prizeRes := prizeRe.FindStringSubmatch(game)
 		x, err := strconv.Atoi(prizeRes[1])
@@ -72,50 +92,8 @@ func getInputValues(filename string) (games []GameInfo) {
 		if err != nil {
 			panic(err)
 		}
-		prizeLocation := Position{x, y}
+		prizeLocation := Position{int64(x), int64(y)}
 		games = append(games, GameInfo{buttons[0], buttons[1], prizeLocation})
 	}
 	return games
-}
-
-func checkWinPossible(game GameInfo) (cheapestSoln [2]int, cheapestCost int, err error) {
-	a, b, c := game.aButton.xOffset, game.bButton.xOffset, game.prizeLocation.x
-	positiveXSolns, err := getSolutions(a, b, c)
-	if err != nil {
-		return [2]int{0, 0}, 0, err
-	}
-	if len(positiveXSolns) == 0 {
-		return [2]int{0, 0}, 0, errors.New("no positive x solutions found")
-	}
-	a, b, c = game.aButton.yOffset, game.bButton.yOffset, game.prizeLocation.y
-	cheapestCost = math.MaxInt32
-	for _, soln := range positiveXSolns {
-		solnCost := 3*soln[0] + soln[1]
-		if a*soln[0]+b*soln[1] == c && solnCost < cheapestCost {
-			cheapestCost = solnCost
-			cheapestSoln = soln
-		}
-	}
-	return cheapestSoln, cheapestCost, nil
-}
-
-func getSolutions(a, b, c int) (solutions [][2]int, err error) {
-	gcd, x, y, s, t := utils.ExtendedGcd(a, b)
-	if c%gcd != 0 {
-		return solutions, errors.New("gcd does not divide c")
-	}
-	x *= c / gcd
-	y *= c / gcd
-	absS := utils.IntAbs(s)
-	absT := utils.IntAbs(t)
-	upperBound := x / absS
-	lowerBound := -y/absT + 1
-	for k := lowerBound; k <= upperBound; k++ {
-		newX := x - k*absS
-		newY := y + k*absT
-		if newX >= 0 && newY >= 0 {
-			solutions = append(solutions, [2]int{newX, newY})
-		}
-	}
-	return solutions, nil
 }
