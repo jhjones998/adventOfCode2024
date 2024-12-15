@@ -120,3 +120,7 @@ func ExtendedGcdUint64(a, b uint64) (oldR, oldS, oldT, s, t uint64) {
 	}
 	return oldR, oldS, oldT, s, t
 }
+
+func PositiveMod(a, b int) int {
+	return ((a % b) + b) % b
+}
